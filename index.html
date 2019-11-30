@@ -151,40 +151,104 @@
           <div id="js-content" class="content-ll">
             
   
-    <article id="post-hello-world" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-小程序笔记1" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2019/11/26/hello-world/">Hello World</a>
+      <a class="article-title" href="/2019/11/29/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E7%AC%94%E8%AE%B01/">小程序笔记01</a>
     </h1>
   
 
         
-        <a href="/2019/11/26/hello-world/" class="archive-article-date">
-  	<time datetime="2019-11-26T13:07:56.467Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-11-26</time>
+        <a href="/2019/11/29/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E7%AC%94%E8%AE%B01/" class="archive-article-date">
+  	<time datetime="2019-11-29T14:55:31.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-11-29</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
+        <h3 id="小程序的创建"><a href="#小程序的创建" class="headerlink" title="小程序的创建"></a>小程序的创建</h3><pre><code>1.创建app.json文件
+    app.json 是当前小程序的全局配置，包括了小程序的所有页面路径、界面表现、网络超时时间、底部 tab 等。
+    内容：{
+        //页面路径(app.json 的 pages 字段就可以知道你当前小程序的所有页面路径)
+        &quot;pages&quot;:[
+            ],
+        //window:设置导航栏函数
+        &quot;window&quot;:{
+            },
+        }
+2.创建app.js文件    
+        JS 脚本文件来处理用户的操作。
+        直接调用App{}
+3.创建目录pages
+4.在pages目录下创建index目录，接着在index(首页)目录下创建page(文件名与所在目录名相同)</code></pre><h2 id="详情"><a href="#详情" class="headerlink" title="详情"></a><a herf="https://developers.weixin.qq.com/miniprogram/dev/framework/structure.html">详情</a></h2><h3 id="区分-wx-getUserInfo-与-wx-getSetting"><a href="#区分-wx-getUserInfo-与-wx-getSetting" class="headerlink" title="区分    wx.getUserInfo    与    wx.getSetting"></a>区分    wx.getUserInfo    与    wx.getSetting</h3><p>wx.getUserInfo(Object object)      获取用户信息。</p>
+<p>wx.getSetting()(Object object)        获取用户的当前设置。返回值中只会出现小程序已经向用户请求过的权限。</p>
+<p><a herf="https://developers.weixin.qq.com/miniprogram/dev/api/open-api/user-info/wx.getUserInfo.html">详情：wx.getUserInfo</a><br><a herf="https://developers.weixin.qq.com/miniprogram/dev/api/open-api/setting/wx.getSetting.html">详情：wx.getSetting</a></p>
+<hr>
+<h3 id="绑定数据"><a href="#绑定数据" class="headerlink" title="绑定数据"></a>绑定数据</h3><pre><code>绑定数据一定在js文件中的onload函数，(onload函数一般用来绑定数据)
+    1.在onload函数中调用wx.getUserInfo对象
+    (```)
+        success:(info)=&gt;{
+                console.log(&quot;获取用户数据成功&quot;;
+                //可以打印success的形参来看看有些什么数据
+                console.log(info);
+                //设置数据
+                this.setData({userInfo:info.userInfo});
+                }
+    (```)</code></pre><hr>
+<h3 id="页面跳转"><a href="#页面跳转" class="headerlink" title="页面跳转"></a>页面跳转</h3><pre><code>将按键与wx.navigateTo绑定即可
+wx.navigateTo(Object object)
+    保留当前页面，跳转到应用内的某个页面。但是不能跳到 tabbar 页面。使用 wx.navigateBack 可以返回到原页面。小程序中页面栈最多十层。
+    (```)
+    wx.navigateTo({
+                  //url属性不能直接写绝对路径，而应该在绝对路径前面写入/,表示从根路径开始查找
+                  url: &apos;/pages/list/list&apos;,
+                })
+    (```)</code></pre><hr>
+<p>###授权登录按键<br>    授权按键：用户未授权时，显示“授权登录”按键，用户授权后，“授权按键消失”。</p>
+<pre><code>wx.authorize(Object object)    提前向用户发起授权请求。调用后会立刻弹窗询问用户是否同意授权小程序使用某项功能或获取用户的某些数据，但不会实际调用对应接口。如果用户之前已经同意授权，则不会出现弹窗，直接返回成功</code></pre><p><a href="https://developers.weixin.qq.com/miniprogram/dev/api/open-api/authorize/wx.authorize.html" target="_blank" rel="noopener">[详情]</a><br><a href="https://developers.weixin.qq.com/miniprogram/dev/framework/open-ability/authorize.html#scope-%E5%88%97%E8%A1%A8" target="_blank" rel="noopener">[scope属性详情]</a></p>
+<pre><code>需要在onload函数中调用wx.getSetting（获取用户授权状态）可以打印其形参来分析wx.getSetting都有那些输出
+    示例：(在onload生命周期函数中)
+    (```)
+        wx.getSetting({
+                success:(type)=&gt;{
+                    console.log(type);
+                    }
+                )}
 
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
+        //可以由输出得出wx.getSetting中的authSetting对象的scope.userinfo: true。
 
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html" target="_blank" rel="noopener">Deployment</a></p>
-
+              //获取用户授权状态并打印
+  wx.getSetting({
+    success:(type)=&gt;{
+      console.log(&apos;获取用户数据失败&apos;);
+      console.log(type);
+      //可以由输出得出wx.getSetting中的authSetting对象的scope.userinfo: true。
+      wx.authorize({
+        scope: &apos;scope.userInfo&apos;,
+      })
+      //如果 type.authSetting[&apos;scope.userInfo&apos;] 属性值为true，就表示已授权，否则就表示未授权
+      if (type.authSetting[&apos;scope.userInfo&apos;]){
+        //证明用户授权了  就可以直接获取用户信息并渲染页面了
+        wx.getUserInfo({
+          success:(info)=&gt;{
+            //将获取到的用户信息设置到data中，就可以了
+            this.setData({userInfo:info.userInfo})
+          }
+        })
+        //销毁按钮
+        this.setData({show:false});
+      }else{
+        //证明用户没有授权 仍然让授权按钮存在
+        this.setData({show:true});
+      }
+    }
+  })
+    (```)</code></pre>
       
 
       
@@ -196,7 +260,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2019/11/26/hello-world/">展开全文 >></a>
+          <a class="article-more-a" href="/2019/11/29/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E7%AC%94%E8%AE%B01/">展开全文 >></a>
         </p>
       
 
