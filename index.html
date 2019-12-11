@@ -175,12 +175,12 @@
 <h4 id="异常处理"><a href="#异常处理" class="headerlink" title="异常处理"></a>异常处理</h4><p>当我们调用 Python 并发生错误或异常时，通常会停止并生成错误消息。<br>可以使用 try 语句处理这些异常：</p>
 <p>实例<br>try 块将生成异常，因为 x 未定义：</p>
 <hr>
-<p>(<code>)
-try:
-  print(x)
-except:
-  print(&quot;An exception occurred&quot;)
-(</code>)</p>
+<p>  (<code>)
+  try:
+    print(x)
+  except:
+    print(&quot;An exception occurred&quot;)
+  (</code>)</p>
 <hr>
 <p>由于 try 块引发错误，因此会执行 except 块。</p>
 <p>如果没有 try 块，程序将崩溃并引发错误：因为x未定义</p>
