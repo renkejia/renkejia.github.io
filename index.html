@@ -151,6 +151,125 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-亚马逊商城的爬取" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/12/11/%E4%BA%9A%E9%A9%AC%E9%80%8A%E5%95%86%E5%9F%8E%E7%9A%84%E7%88%AC%E5%8F%96/">爬取亚马逊商城的相关信息</a>
+    </h1>
+  
+
+        
+        <a href="/2019/12/11/%E4%BA%9A%E9%A9%AC%E9%80%8A%E5%95%86%E5%9F%8E%E7%9A%84%E7%88%AC%E5%8F%96/" class="archive-article-date">
+  	<time datetime="2019-12-11T09:36:59.573Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-12-11</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="爬取亚马逊商城的相关信息"><a href="#爬取亚马逊商城的相关信息" class="headerlink" title="爬取亚马逊商城的相关信息"></a>爬取亚马逊商城的相关信息</h3><pre><code>(```)
+&gt;&gt;&gt;r.status_code
+(```)    
+返回的是503
+之后打印响应内容编码方式
+
+(```)
+&gt;&gt;&gt; r.encoding    
+(```)
+&apos;r.encoding&apos;为从HTTP header中猜测的响应内容编码方式
+
+返回值为&apos;ISO-8859-1&apos;，所以要将编码改成可以执行（阅读的编码）
+
+(```)
+&gt;&gt;&gt;r.encoding = r.apparent_encoding
+(```)
+&apos;r.apparent_encoding&apos;为从内容中分析出响应内容编码方式(备选编码方式)
+
+(```)
+&gt;&gt;&gt;r.text
+(```)
+通过返回的文本，我们可知这个错误是API造成的，如果能从服务器获得页面的相关信息</code></pre><p>说明这个错误不是网络原因造成的</p>
+<pre><code>分析得出亚马逊对爬虫有限制（对爬虫的限制有两种：robots协议；判断HTTP的头部信</code></pre><p>息来判断访问是不是有爬虫引起的）</p>
+<pre><code>接着来查看发给亚马逊信息的request的头部信息的内容：
+(```)
+&gt;&gt;&gt; r.request.headers
+{&apos;User-Agent&apos;: &apos;python-requests/2.22.0&apos;,
+ &apos;Accept-Encoding&apos;: &apos;gzip, deflate&apos;, &apos;Accept&apos;: &apos;*/*&apos;, &apos;Connection&apos;: &apos;keep-alive&apos;}
+(```)
+
+根据头部信息中的User-Agent的信息可知，爬虫忠实的告诉亚马逊它是由一个python的requests库造成的</code></pre><h4 id="如何解决？"><a href="#如何解决？" class="headerlink" title="如何解决？"></a>如何解决？</h4><pre><code>（思路）
+我们通过更改爬虫的头部信息(User-Agent)来模拟浏览器向亚马逊发送请求
+（实施）
+构造一对键值对将user-agent修改
+    (```)
+    &gt;&gt;&gt; kv = {&apos;user-agent&apos;:&apos;Mozilla/5.0&apos;}
+    (```)  </code></pre><p>（浏览器的头部信息中’user-agent’:’Mozilla/5.0’     Mozilla/5.0是标准的浏览器的身份表识字段）<br>        (<code>)
+        &gt;&gt;&gt; url = &quot;(刚才访问的页面的url)&quot;
+        &gt;&gt;&gt;r = requests.get(url, headers = kv)
+        &gt;&gt;&gt;r.status_code
+        200
+        &gt;&gt;&gt; r.request.headers
+        {&#39;user-agent&#39;: &#39;Mozilla/5.0&#39;, &#39;Accept-Encoding&#39;: &#39;gzip, deflate&#39;,
+         &#39;Accept&#39;: &#39;*/*&#39;, &#39;Connection&#39;: &#39;keep-alive&#39;}
+        (</code>)<br>    (可以看到头部信息已修改)</p>
+<h4 id="完整代码："><a href="#完整代码：" class="headerlink" title="完整代码："></a>完整代码：</h4><p>(<code>)
+import requests
+url = &quot;https://www.amazon.cn/dp/B07PCPQ7HX/ref=sr_1_23?__mk_zh_CN=%E4%BA%9A%E9%A9%AC%E9%80%8A%E7%BD%91%E7%AB%99&amp;keywords=%E6%9E%81%E7%AE%80&amp;qid=1576051747&amp;s=books&amp;sr=1-23&quot;
+try:
+    kv = {&#39;user-agent&#39;:&#39;Mozilla/5.0&#39;}
+    r = requests.get(url,headers=kv)
+    r.raise_for_status()
+    r.encoding  = r.apparent_encoding
+    print(r.text[1000:2000])
+except:
+    print(&quot;爬取失败&quot;)
+(</code>)<br>raise_for_status()方法<br>理解Response类非常重要，Response这样的一个对象返回了所有的网页内容，<br>那么它也提供了一个方法，叫raise_for_status()，这个方法是专门与异常打交道的方法，<br>该方法有这样一个有趣的功能，它能够判断返回的Response类型状态是不是200。<br>如果是200，他将表示返回的内容是正确的，如果不是200，他就会产生一个HttpError的异常。</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/12/11/%E4%BA%9A%E9%A9%AC%E9%80%8A%E5%95%86%E5%9F%8E%E7%9A%84%E7%88%AC%E5%8F%96/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" target="_blank" rel="noopener" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-小程序笔记1" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
