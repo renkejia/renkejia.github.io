@@ -8,14 +8,14 @@
   <link rel="dns-prefetch" href="http://yoursite.com">
   <title>JS day01复习 | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="2020.1.08 知识复习Js的基本数据类型String Number Boolean Undefined Object ...JS的强制类型转换1. 强转String     - toString()方法      该方法不会影响到原变量，他会将转换结果返回     但是注意： null和underfined这两个值没有toString()方法      - String()调用     使用">
+  <meta name="description" content="2020.1.08 知识复习Js的基本数据类型String Number Boolean Undefined Object ...JS的强制类型转换 强转String  toString()方法该方法不会影响到原变量，他会将转换结果返回但是注意： null和underfined这两个值没有toString()方法  String()调用使用String()函数做强类型的转换时，对于Number和B">
 <meta property="og:type" content="article">
 <meta property="og:title" content="JS day01复习">
 <meta property="og:url" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2020&#x2F;01&#x2F;09&#x2F;JSday01%E5%A4%8D%E4%B9%A0&#x2F;index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="2020.1.08 知识复习Js的基本数据类型String Number Boolean Undefined Object ...JS的强制类型转换1. 强转String     - toString()方法      该方法不会影响到原变量，他会将转换结果返回     但是注意： null和underfined这两个值没有toString()方法      - String()调用     使用">
+<meta property="og:description" content="2020.1.08 知识复习Js的基本数据类型String Number Boolean Undefined Object ...JS的强制类型转换 强转String  toString()方法该方法不会影响到原变量，他会将转换结果返回但是注意： null和underfined这两个值没有toString()方法  String()调用使用String()函数做强类型的转换时，对于Number和B">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2020-01-09T01:39:10.407Z">
+<meta property="og:updated_time" content="2020-01-09T01:46:08.763Z">
 <meta name="twitter:card" content="summary">
   
     <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
@@ -172,96 +172,102 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h2 id="2020-1-08-知识复习"><a href="#2020-1-08-知识复习" class="headerlink" title="2020.1.08 知识复习"></a>2020.1.08 知识复习</h2><h3 id="Js的基本数据类型"><a href="#Js的基本数据类型" class="headerlink" title="Js的基本数据类型"></a>Js的基本数据类型</h3><pre><code>String Number Boolean Undefined Object ...</code></pre><h3 id="JS的强制类型转换"><a href="#JS的强制类型转换" class="headerlink" title="JS的强制类型转换"></a>JS的强制类型转换</h3><pre><code>1. 强转String
-    - toString()方法 
-    该方法不会影响到原变量，他会将转换结果返回
-    但是注意： null和underfined这两个值没有toString()方法
-
-    - String()调用
-    使用String()函数做强类型的转换时，
-    对于Number和Boolean实际上就是调用的toString()方法
-    但是对于null和undefined，就不会调用toString()方法
-    它会将null 直接转换为&quot;null&quot;
-    将underfined 直接转换为 &quot;undefined&quot;
-2. 强转Number
-    - 调用Number()方法   
-        字符串 --&gt; 数字   
-            1. 如果是纯数字的字符串，则直接将其转换为数字
-            2. 如果字符串中有非数字的内容，则转换为NaN
-            3. 如果字符串是一个空串或是一个全空格的字符，则转换为0
-        布尔 --&gt; 数字
-        true 转成 1
-        false 转成 0
-        - Null --&gt; 数字 0
-        - undefined --&gt; 数字NaN 
-    - 调用parseInt() 把一个字符串转换为一个整数,parseInt可将一个字符串中有效的整数内容取出来
-    - 调用parseFloat() 把一个字符串转换为一个浮点数
-    - 备注：如果对非String使用parseInt()或parseFloat()
-        它会先将其转换为String然后在操作
----</code></pre><h3 id="运算符"><a href="#运算符" class="headerlink" title="运算符"></a>运算符</h3><pre><code>1. 算数运算符</code></pre><p>`<br>    var result<br>       result = true + 1;<br>       console.log(result); //结果为2</p>
-<pre><code>result = true + false;   
-console.log(result); //结果为1
-
-result = 2 + NaN;
-console.log(result);  //结果为NaN
-
-result = &quot;你好&quot; + &quot;大帅哥&quot;;
-console.log(result);</code></pre><p>`<br>    2. 关系运算符<br>        对于非数值的情况，如果符号两侧的值都是字符串时，不会将其转换为数字进行比较，而会分别比较字符串中字符的Unicode编码。<br>        <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">console.log(&quot;1&quot; &lt; &quot;5&quot;); //true</span><br><span class="line">console.log(&quot;12521451&quot; &lt; &quot;5&quot;);    //true</span><br><span class="line">//比较两个字符串时，比较的是字符串的字符编码</span><br><span class="line">console.log(&quot;a&quot; &lt; &quot;b&quot;);    //true</span><br><span class="line">//比较字符编码时是一位一位进行比较</span><br><span class="line">console.log(&quot;abc&quot; &lt; &quot;b&quot;); //true</span><br><span class="line">//如果两位一样，则比较下一位，所以借用它来对英文进行排序</span><br><span class="line">console.log(&quot;bbc&quot; &lt; &quot;b&quot;); //false</span><br></pre></td></tr></table></figure><br>    3. 三元运算符<br>        - 语法：    条件表达式？语句1：语句2;<br>        - 执行的流程<br>            条件运算符在执行时，首先对条件表达式进行求值，<br>            如果该值为true，则执行语句1,并返回执行结果<br>            如果该值为false,则执行语句2，并返回执行结果<br>        - 示例：<br>        <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">var a = 10;</span><br><span class="line">var b = 20;</span><br><span class="line">a &gt; b ? alert(&quot;a大&quot;):alert(&quot;b大&quot;);</span><br><span class="line"></span><br><span class="line">//获取a和b中的最大值</span><br><span class="line">var max = a &gt; b ? a : b;</span><br><span class="line">console.log(&quot;max = &quot;+max);</span><br><span class="line"></span><br><span class="line">//获取a b c 中的最大值</span><br><span class="line">max = max &gt; c ? max : c;</span><br><span class="line">//一行代码，不推荐使用，不方便阅读</span><br><span class="line">var max1 = a &gt; b ? (a &gt; c ? a : c) : (b &gt; c ? b : c);</span><br></pre></td></tr></table></figure><br>    —</p>
-<h3 id="prompt语句"><a href="#prompt语句" class="headerlink" title="prompt语句"></a>prompt语句</h3><pre><code>prompt()可以弹出一个提示框，该提示框中会带有一个文本框,用户可以在文本框中输入一段内容，该函数需要一个字符串作为参数，该字符串将会作为提示框的提示文字用户输入的内容将会作为函数的返回值返回，可以定义一个变量来接受该内容 
----</code></pre><h3 id="break-语句知识补充"><a href="#break-语句知识补充" class="headerlink" title="break 语句知识补充"></a>break 语句知识补充</h3><pre><code>1. tips:可以为循环语句创建一个label，来标识当前的循环
-    label:循环语句
-    使用break语句时，可以在break后跟着一个label，
-    这样break将会结束指定的循环，而不是最近的
-    示例：
-    <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">outer:</span><br><span class="line">for(var i=0; i&lt;5;i++)&#123;</span><br><span class="line">    console.log(&quot;@外层循环&quot;+i);</span><br><span class="line">    for(var j=0;j&lt;5;j++)&#123;</span><br><span class="line">        break outer;</span><br><span class="line">        console.log(&quot;@内层循环&quot;+j);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-2. break与continue的区别
-    - break终止整个循环
-    - continue仅仅跳过当次循环
----</code></pre><h3 id="console-time"><a href="#console-time" class="headerlink" title="console.time()"></a>console.time()</h3><pre><code>测试程序的性能时
-程序执行前，开启计时器
-console.time(&quot;计时器的名字&quot;)可以用来开启计时器
-它需要一个字符串作为参数，这个字符串将会作为计时器的标识
-
-终止计时器
-console.timeEnd()用来停止一个计时器，
-需要一个计时器的名字作为参数
-console.timeEnd(&quot;test&quot;);
-示例：
-
-`console.time(&quot;test);`
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">function fun()&#123;</span><br><span class="line">    echo &quot;这是一句非常牛逼的代码&quot;;</span><br><span class="line">&#125;</span><br><span class="line">fun();</span><br></pre></td></tr></table></figure>
-`console.timeEnd(&quot;test&quot;)`;
----</code></pre><h3 id="对象"><a href="#对象" class="headerlink" title="对象"></a>对象</h3><pre><code>对象属于一种复合的数据类型，在对象中可以保存多个不同的数据类型的属性
-
-- 对象的分类
-    1. 内嵌对象
-        - 由ES标准定义的对象，在任何的ES的实现中都可以使用
-        - 比如，Math String Number Boolean Function Object..
-
-    2. 数组对象
-        - 由JS的运行环境提供的对象，目前来讲主要指浏览器提供的对象
-        比如 BOM DOM
-
-    3. 自定义对象
-        - 由开发人员自己创建的对象
-- 创建对象
-    `var obj = new Object();`
-- 向对象添加属性
-    语法：对象.属性名 = 属性值;
-    示例：
-    <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">//向obj中添加一个name属性</span><br><span class="line">obj.name = &quot;王麻子&quot;;</span><br><span class="line">//向obj中添加一个gender属性</span><br><span class="line">obj.sex = &quot;男&quot;;</span><br><span class="line">//添加age属性</span><br><span class="line">obj.age = &quot;18&quot;;</span><br></pre></td></tr></table></figure>
-- 读取对象中的属性
-    <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">读取obj的sex属性</span><br><span class="line">console.log(obj.sex);</span><br></pre></td></tr></table></figure>
-    如果读取对象中没有的属性，不会报错而是会返回underfined
-- 修改对象的属性名
-    语法：对象.属性名 = 新值
-    修改obj中name属性
-    `obj.name = &quot;王狗蛋&quot;;`
-- 删除对象的属性
-    语法：delete 对象.属性名
-    <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">delete obj.name;</span><br><span class="line">console.log(obj.name);</span><br></pre></td></tr></table></figure>
-2020.1.9</code></pre><hr>
-
+        <h2 id="2020-1-08-知识复习"><a href="#2020-1-08-知识复习" class="headerlink" title="2020.1.08 知识复习"></a>2020.1.08 知识复习</h2><h3 id="Js的基本数据类型"><a href="#Js的基本数据类型" class="headerlink" title="Js的基本数据类型"></a>Js的基本数据类型</h3><pre><code>String Number Boolean Undefined Object ...</code></pre><h3 id="JS的强制类型转换"><a href="#JS的强制类型转换" class="headerlink" title="JS的强制类型转换"></a>JS的强制类型转换</h3><ol>
+<li><p>强转String</p>
+<ul>
+<li><p>toString()方法<br>该方法不会影响到原变量，他会将转换结果返回<br>但是注意： null和underfined这两个值没有toString()方法</p>
+</li>
+<li><p>String()调用<br>使用String()函数做强类型的转换时，<br>对于Number和Boolean实际上就是调用的toString()方法<br>但是对于null和undefined，就不会调用toString()方法<br>它会将null 直接转换为”null”<br>将underfined 直接转换为 “undefined”</p>
+</li>
+</ul>
+</li>
+<li><p>强转Number</p>
+<ul>
+<li>调用Number()方法   <ul>
+<li>字符串 –&gt; 数字   <ol>
+<li>如果是纯数字的字符串，则直接将其转换为数字</li>
+<li>如果字符串中有非数字的内容，则转换为NaN</li>
+<li>如果字符串是一个空串或是一个全空格的字符，则转换为0</li>
+</ol>
+</li>
+<li>布尔 –&gt; 数字</li>
+<li>true 转成 1</li>
+<li>false 转成 0</li>
+<li>Null –&gt; 数字 0</li>
+<li>undefined –&gt; 数字NaN <ul>
+<li>调用parseInt() 把一个字符串转换为一个整数,parseInt可将一个字符串中有效的整数内容取出来</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>调用parseFloat() 把一个字符串转换为一个浮点数</li>
+<li>备注：如果对非String使用parseInt()或parseFloat()<br>它会先将其转换为String然后在操作</li>
+</ul>
+</li>
+</ol>
+<hr>
+<h3 id="运算符"><a href="#运算符" class="headerlink" title="运算符"></a>运算符</h3><ol>
+<li>算数运算符<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">var result</span><br><span class="line">   result = true + 1;</span><br><span class="line">   console.log(result); //结果为2</span><br><span class="line">   </span><br><span class="line">   result = true + false;   </span><br><span class="line">   console.log(result); //结果为1</span><br><span class="line"></span><br><span class="line">   result = 2 + NaN;</span><br><span class="line">   console.log(result);  //结果为NaN</span><br><span class="line"></span><br><span class="line">   result = &quot;你好&quot; + &quot;大帅哥&quot;;</span><br><span class="line">   console.log(result);</span><br></pre></td></tr></table></figure></li>
+<li>关系运算符<br>对于非数值的情况，如果符号两侧的值都是字符串时，不会将其转换为数字进行比较，而会分别比较字符串中字符的Unicode编码。<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">console.log(&quot;1&quot; &lt; &quot;5&quot;); //true</span><br><span class="line">console.log(&quot;12521451&quot; &lt; &quot;5&quot;);    //true</span><br><span class="line">//比较两个字符串时，比较的是字符串的字符编码</span><br><span class="line">console.log(&quot;a&quot; &lt; &quot;b&quot;);    //true</span><br><span class="line">//比较字符编码时是一位一位进行比较</span><br><span class="line">console.log(&quot;abc&quot; &lt; &quot;b&quot;); //true</span><br><span class="line">//如果两位一样，则比较下一位，所以借用它来对英文进行排序</span><br><span class="line">console.log(&quot;bbc&quot; &lt; &quot;b&quot;); //false</span><br></pre></td></tr></table></figure></li>
+<li>三元运算符</li>
+</ol>
+<ul>
+<li>语法：    条件表达式？语句1：语句2;</li>
+<li>执行的流程<br>条件运算符在执行时，首先对条件表达式进行求值，如果该值为true，则执行语句1,并返回执行结果如果该值为false,则执行语句2，并返回执行结果</li>
+<li>示例：<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">var a = 10;</span><br><span class="line">var b = 20;</span><br><span class="line">a &gt; b ? alert(&quot;a大&quot;):alert(&quot;b大&quot;);</span><br><span class="line"></span><br><span class="line">//获取a和b中的最大值</span><br><span class="line">var max = a &gt; b ? a : b;</span><br><span class="line">console.log(&quot;max = &quot;+max);</span><br><span class="line"></span><br><span class="line">//获取a b c 中的最大值</span><br><span class="line">max = max &gt; c ? max : c;</span><br><span class="line">//一行代码，不推荐使用，不方便阅读</span><br><span class="line">var max1 = a &gt; b ? (a &gt; c ? a : c) : (b &gt; c ? b : c);</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<hr>
+<h3 id="prompt语句"><a href="#prompt语句" class="headerlink" title="prompt语句"></a>prompt语句</h3><h2 id="prompt-可以弹出一个提示框，该提示框中会带有一个文本框-用户可以在文本框中输入一段内容，该函数需要一个字符串作为参数，该字符串将会作为提示框的提示文字用户输入的内容将会作为函数的返回值返回，可以定义一个变量来接受该内容"><a href="#prompt-可以弹出一个提示框，该提示框中会带有一个文本框-用户可以在文本框中输入一段内容，该函数需要一个字符串作为参数，该字符串将会作为提示框的提示文字用户输入的内容将会作为函数的返回值返回，可以定义一个变量来接受该内容" class="headerlink" title="prompt()可以弹出一个提示框，该提示框中会带有一个文本框,用户可以在文本框中输入一段内容，该函数需要一个字符串作为参数，该字符串将会作为提示框的提示文字用户输入的内容将会作为函数的返回值返回，可以定义一个变量来接受该内容 "></a>prompt()可以弹出一个提示框，该提示框中会带有一个文本框,用户可以在文本框中输入一段内容，该函数需要一个字符串作为参数，该字符串将会作为提示框的提示文字用户输入的内容将会作为函数的返回值返回，可以定义一个变量来接受该内容 </h2><h3 id="break-语句知识补充"><a href="#break-语句知识补充" class="headerlink" title="break 语句知识补充"></a>break 语句知识补充</h3><ol>
+<li>tips:可以为循环语句创建一个label，来标识当前的循环<br>label:循环语句<br>使用break语句时，可以在break后跟着一个label，<br>这样break将会结束指定的循环，而不是最近的<br>示例：<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">outer:</span><br><span class="line">for(var i=0; i&lt;5;i++)&#123;</span><br><span class="line">console.log(&quot;@外层循环&quot;+i);</span><br><span class="line">for(var j=0;j&lt;5;j++)&#123;</span><br><span class="line">    break outer;</span><br><span class="line">    console.log(&quot;@内层循环&quot;+j);</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li>break与continue的区别<ul>
+<li>break终止整个循环</li>
+<li>continue仅仅跳过当次循环</li>
+</ul>
+</li>
+</ol>
+<hr>
+<h3 id="console-time"><a href="#console-time" class="headerlink" title="console.time()"></a>console.time()</h3><p>测试程序的性能时<br>程序执行前，开启计时器<br>console.time(“计时器的名字”)可以用来开启计时器<br>它需要一个字符串作为参数，这个字符串将会作为计时器的标识</p>
+<p>终止计时器<br>console.timeEnd()用来停止一个计时器，<br>需要一个计时器的名字作为参数<br>console.timeEnd(“test”);<br>示例：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">console.time(&quot;test);</span><br><span class="line"></span><br><span class="line">function fun()&#123;</span><br><span class="line">    echo &quot;这是一句非常牛逼的代码&quot;;</span><br><span class="line">&#125;</span><br><span class="line">fun();</span><br><span class="line"></span><br><span class="line">console.timeEnd(&quot;test&quot;);</span><br></pre></td></tr></table></figure>
+<hr>
+<h3 id="对象"><a href="#对象" class="headerlink" title="对象"></a>对象</h3><p>对象属于一种复合的数据类型，在对象中可以保存多个不同的数据类型的属性</p>
+<ul>
+<li><p>对象的分类</p>
+<ol>
+<li><p>内嵌对象</p>
+<ul>
+<li>由ES标准定义的对象，在任何的ES的实现中都可以使用</li>
+<li>比如，Math String Number Boolean Function Object..</li>
+</ul>
+</li>
+<li><p>数组对象</p>
+<ul>
+<li>由JS的运行环境提供的对象，目前来讲主要指浏览器提供的对象<br>比如 BOM DOM</li>
+</ul>
+</li>
+<li><p>自定义对象</p>
+<ul>
+<li>由开发人员自己创建的对象</li>
+</ul>
+</li>
+</ol>
+</li>
+<li><p>创建对象<br>  <code>var obj = new Object();</code></p>
+<ul>
+<li>向对象添加属性<br>语法：对象.属性名 = 属性值;<br>示例：<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">//向obj中添加一个name属性</span><br><span class="line">obj.name = &quot;王麻子&quot;;</span><br><span class="line">//向obj中添加一个gender属性</span><br><span class="line">obj.sex = &quot;男&quot;;</span><br><span class="line">//添加age属性</span><br><span class="line">obj.age = &quot;18&quot;;</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><p>读取对象中的属性</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">读取obj的sex属性</span><br><span class="line">console.log(obj.sex);</span><br></pre></td></tr></table></figure>
+<p>如果读取对象中没有的属性，不会报错而是会返回underfined</p>
+</li>
+<li><p>修改对象的属性名<br>语法：对象.属性名 = 新值<br>修改obj中name属性<br><code>obj.name = &quot;王狗蛋&quot;;</code></p>
+</li>
+<li><p>删除对象的属性<br>语法：delete 对象.属性名</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">delete obj.name;</span><br><span class="line">console.log(obj.name);</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h2 id="2020-1-9"><a href="#2020-1-9" class="headerlink" title="2020.1.9"></a>2020.1.9</h2>
       
 
       
